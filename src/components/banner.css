@@ -1,0 +1,21 @@
+.banner-container {
+  min-height: 200px;
+  border-bottom-left-radius: 30%;
+  border-bottom-right-radius: 50%;
+  background-color: rgba(34, 177, 233, 0.7);
+}
+
+.image-container {
+  width: 100%;
+  margin: auto;
+}
+
+.logo-contact-page {
+  width: 100%;
+  transform: scale(0.8);
+  padding-top: 2.5rem;
+  object-fit: contain;
+  /* filter: contrast(50); */
+  filter: brightness(15);
+  /* filter: saturate(10%); */
+}
