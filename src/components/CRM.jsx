@@ -4,13 +4,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { dataActions } from '../store/data-reducer';
 import EachTable from './EachTable';
 import './CRM.css';
+import AddUser from './AddUser';
+
 
 const CRM = () => {
   const data = useSelector((state) => state.dataReducer.data);
   const [filteredData, setFilteredData] = useState(data);
   const [selectedFilter, setSelectedFilter] = useState('0');
-  console.log(filteredData);
+  const [refresh, setRefresh] = useState(false);
   const dispatch = useDispatch();
+
+  if (refresh) {
+    setFilteredData([...data]);
+    // console.log('filteredData', filteredData);
+    setRefresh(false);
+  }
   useEffect(() => {
     const fetchData = async () => {
       const requestOptions = {
@@ -26,11 +34,14 @@ const CRM = () => {
         .catch((error) => console.log('error', error));
       const results = await dataFetched;
       const resultsRedux = dispatch(dataActions.getData(results));
-      console.log(resultsRedux.payload);
-      setFilteredData(resultsRedux.payload);
+        setFilteredData(resultsRedux.payload);
     }
     fetchData();
-  }, [])
+  }, [data])
+
+  const handleRefresh = () => {
+    setRefresh(true);
+  };
 
   const handleSelectedValue = (e) => {
     setSelectedFilter(e.target.value);
@@ -47,17 +58,14 @@ const CRM = () => {
          return 1;
         return 0; //default return value (no sorting)
       });
-      console.log(dummyData);
       setFilteredData(dummyData);
     } else if (e.target.value === '2') {
       const dummyData = [...data];
       const subscribedArray = dummyData.filter((each) => each.user_subscribed)
-      console.log(subscribedArray);
       setFilteredData(subscribedArray);
     } else if (e.target.value === '3') {
       const dummyData = [...data];
       const subscribedArray = dummyData.filter((each) => !each.user_subscribed);
-      console.log(subscribedArray);
       setFilteredData(subscribedArray);
     }
   }
@@ -87,7 +95,10 @@ const CRM = () => {
                 <option value="3">Unsubscribed</option>
               </Form.Select>
             </div>
-          </div>
+            </div>
+            <div className="enter-new-user-container">
+              <AddUser handleRefresh={handleRefresh} />
+            </div>
           <div className="table-entires-selector">
             <table className="table data-entries-table">
               <thead>
@@ -102,7 +113,7 @@ const CRM = () => {
               </thead>
               <tbody>
                 {filteredData.map((each, index) => {
-                  return <EachTable userEach={each} number={index} />;
+                  return <EachTable key={each._id} userEach={each} number={index} handleRefresh={handleRefresh} />;
                 })}
               </tbody>
             </table>

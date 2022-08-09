@@ -22,7 +22,15 @@ const dataSlice = createSlice({
     removeData(state, action) {
       return ({
         ...state,
-        data: action.payload
+        data: action.payload,
+        delete: true,
+      })
+    },
+    setDeletedFalse(state, action) {
+      return ({
+        ...state,
+        data: state.data,
+        delete: action.payload,
       })
     }
   }

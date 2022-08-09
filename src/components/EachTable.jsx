@@ -1,8 +1,7 @@
 import React from 'react'
-import { AiFillEdit } from 'react-icons/ai'
 import ModalUser from './ModalUser';
 
-const EachTable = ({ userEach, number }) => {
+const EachTable = ({ userEach, number, handleRefresh }) => {
   return (
     <tr>
       <th scope="row">{number}</th>
@@ -15,7 +14,7 @@ const EachTable = ({ userEach, number }) => {
         <td className="subscribe-row">No</td>
       )}
       <td>
-        <ModalUser person={userEach} />
+        <ModalUser handleRefresh={handleRefresh} person={userEach} />
       </td>
     </tr>
   );

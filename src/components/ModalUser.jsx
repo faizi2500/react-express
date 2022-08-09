@@ -5,13 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { dataActions } from '../store/data-reducer';
 
 
-const ModalUser = ({ person }) => {
+const ModalUser = ({ person, handleRefresh }) => {
   const data = useSelector((state) => state.dataReducer)
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  console.log(person._id);
   const handleDelete = async (e) => {
     e.preventDefault();
     const requestOptions = {
@@ -44,7 +43,7 @@ const ModalUser = ({ person }) => {
 
     dispatch(dataActions.removeData(results))
     setShow(false);
-    
+    handleRefresh();
   }
   return (
     <>
