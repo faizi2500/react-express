@@ -9,15 +9,19 @@ import AddUser from './AddUser';
 
 const CRM = () => {
   const data = useSelector((state) => state.dataReducer.data);
-  const [filteredData, setFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState([]);
+  const [runEffect, setRunEffect] = useState(true);
   const [selectedFilter, setSelectedFilter] = useState('0');
   const [refresh, setRefresh] = useState(false);
   const dispatch = useDispatch();
-
   if (refresh) {
-    setFilteredData([...data]);
+    // setFilteredData([...data]);
     // console.log('filteredData', filteredData);
     setRefresh(false);
+  }
+
+  const handleAddedUser = () => {
+    window.location.reload(false);
   }
   useEffect(() => {
     const fetchData = async () => {
@@ -34,10 +38,12 @@ const CRM = () => {
         .catch((error) => console.log('error', error));
       const results = await dataFetched;
       const resultsRedux = dispatch(dataActions.getData(results));
-        setFilteredData(resultsRedux.payload);
+      setFilteredData(resultsRedux.payload);
+      setRunEffect(false);
+      
     }
     fetchData();
-  }, [data])
+  }, [])
 
   const handleRefresh = () => {
     setRefresh(true);
@@ -58,15 +64,24 @@ const CRM = () => {
          return 1;
         return 0; //default return value (no sorting)
       });
-      setFilteredData(dummyData);
+      setFilteredData([...dummyData]);
     } else if (e.target.value === '2') {
       const dummyData = [...data];
       const subscribedArray = dummyData.filter((each) => each.user_subscribed)
-      setFilteredData(subscribedArray);
+      console.log(subscribedArray);
+      if (subscribedArray) {
+        setFilteredData(subscribedArray);
+      } else {
+        setFilteredData([])
+      }
     } else if (e.target.value === '3') {
       const dummyData = [...data];
-      const subscribedArray = dummyData.filter((each) => !each.user_subscribed);
-      setFilteredData(subscribedArray);
+      if (dummyData) {
+        const subscribedArray = dummyData.filter((each) => !each.user_subscribed);
+        setFilteredData(subscribedArray);
+      } else {
+        setFilteredData([]);
+      }
     }
   }
   return (
@@ -97,7 +112,7 @@ const CRM = () => {
             </div>
             </div>
             <div className="enter-new-user-container">
-              <AddUser handleRefresh={handleRefresh} />
+              <AddUser handleAddedUser={handleAddedUser} />
             </div>
           <div className="table-entires-selector">
             <table className="table data-entries-table">

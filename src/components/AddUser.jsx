@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { AiOutlineUserAdd } from 'react-icons/ai'
 
-const AddUser = ({ handleRefresh }) => {
+const AddUser = ({handleAddedUser}) => {
   const [show, setShow] = useState(false);
   const ref = useRef(null);
   const [name, setName] = useState('');
@@ -72,9 +72,9 @@ const AddUser = ({ handleRefresh }) => {
         setSubscribe(false);
         setSuccessful(true);
         setShow(false);
+        handleAddedUser();
       })
       .catch((error) => console.log('error', error));
-    handleRefresh();
   };
 
   const handleClose = () => setShow(false);
@@ -193,6 +193,6 @@ const AddUser = ({ handleRefresh }) => {
       </Modal>
     </div>
   );
-}
+};
 
 export default AddUser

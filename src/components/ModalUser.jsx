@@ -6,7 +6,6 @@ import { dataActions } from '../store/data-reducer';
 
 
 const ModalUser = ({ person, handleRefresh }) => {
-  const data = useSelector((state) => state.dataReducer)
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const handleClose = () => setShow(false);
@@ -44,6 +43,7 @@ const ModalUser = ({ person, handleRefresh }) => {
     dispatch(dataActions.removeData(results))
     setShow(false);
     handleRefresh();
+    window.location.reload()
   }
   return (
     <>
