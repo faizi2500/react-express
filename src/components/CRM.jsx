@@ -67,8 +67,6 @@ const CRM = () => {
         <h2>Hello</h2>
       ) : (
         <>
-          {/* my-5 w-auto position-absolute top-0 translate-middle */}
-          {/* filter-selection-position */}
           <div className="crm-page-header">
             <div>
               <img
