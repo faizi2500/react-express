@@ -35,10 +35,6 @@ const App = () => {
               )}
             </>
           )
-          // <>
-          //   <Banner />
-          //   <Form />
-          // </>
         }
         />
         <Route path='/crm' element={
