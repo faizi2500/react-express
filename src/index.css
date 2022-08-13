@@ -71,3 +71,11 @@ code {
   color: 'black';
 }
 
+.modal-backdrop {
+  background-color: transparent;
+}
+
+.hidden-input-country-validation {
+  margin-top: -10px;
+}
+

@@ -4,6 +4,7 @@ import { useTable, useSortBy, useFilters } from 'react-table';
 import AddUserReactTable from './AddUserReactTable';
 import ModalUser from './ModalUser';
 import UserModal from './UserModal';
+import UserModalNew from './UserModalNew';
 
 function DefaultColumnFilter({
   column: {filterValue, preFilteredRows, setFilter},
@@ -40,6 +41,10 @@ const columns = [
     accessor: 'user_mobile',
   },
   {
+    Header: 'User Country',
+    accessor: 'user_country',
+  },
+  {
     Header: 'User Subscribed',
     accessor: 'user_subscribed',
   },
@@ -49,12 +54,11 @@ const TableComponent = (props) => {
   const data = useMemo(() => props.data, [props.data]);
   const [person, setPerson] = useState([]);
   const [show, setShow] = useState(false);
+  const [newShow, setNewShow] = useState(false);
   const [addShow, setAddShow] = useState(false);
 
   const changeShowToTrue = (action, value='') => {
-    console.log(value);
-    console.log(action)
-    if (action === 'DELETE') {
+    if (action === 'DELETE-MODAL-BOX') {
       const person2 = data.filter((obj) => obj._id == value);
       setPerson(person2[0]);
       setShow(true);
@@ -62,6 +66,7 @@ const TableComponent = (props) => {
       setAddShow(true);
     }
   }
+
   const changeShowToFalse = (action) => {
     if (action === 'ADD') {
       setAddShow(false)
@@ -73,12 +78,11 @@ const TableComponent = (props) => {
       setShow(false);
     }
   }
-  // const [passId, setPassId] = useState();
+
   let keyVal = 0;
 
   const defaultColumn = React.useMemo(
     () => ({
-      // Let's set up our default Filter UI
       Filter: DefaultColumnFilter,
     }),
     []
@@ -193,7 +197,14 @@ const TableComponent = (props) => {
                             True
                           </td>
                           <td>
-                            <UserModal value={row.values._id} data={data} />
+                            <UserModal
+                              value={row.values._id}
+                              data={data}
+                              changeShowToTrue={changeShowToTrue}
+                              changeShowToFalse={changeShowToFalse}
+                              show={show}
+                              person={person}
+                            />
                           </td>
                         </>
                       );

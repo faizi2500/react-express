@@ -1,22 +1,16 @@
 import axios from 'axios';
-import React, {useState} from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 const UserModal = ({
   value,
-  data,
   changeShowToTrue,
   show,
   changeShowToFalse,
   person,
 }) => {
-  // console.log(value);
-  // console.log(data);
 
-  // console.log(array)
-  // const [show, setShow] = useState(false);
-  // const [person, setPerson] = useState([]);
   const handleClose = () => {
     changeShowToFalse('CLOSE-DELTE-MODAL');
   };
@@ -24,9 +18,8 @@ const UserModal = ({
   const handleShow = () => {
     // const person2 = data.filter((obj) => obj._id == value);
     // setPerson(person2[0]);
-    changeShowToTrue('DELETE', value);
+    changeShowToTrue('DELETE-MODAL-BOX', value);
   };
-  console.log(person);
 
   const handleUserDelete = async () => {
     const config = {
@@ -43,34 +36,32 @@ const UserModal = ({
         console.log(error);
       });
     changeShowToFalse('DELETE');
-    // setShow(false)
   };
-  // console.log(person3);
-  // const person = {
-  //   user_name: 'BILAL',
-  //   user_email: 'a1@gmail.com',
-  //   user_mobile: '021215',
-  //   user_comments: 'Hello'
-  // }
+  
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button variant="primary" onClick={() => handleShow()}>
         View
       </Button>
 
       <Modal
         show={show}
-        onHide={handleClose}
+        onHide={() => handleClose()}
         backdrop="static"
         keyboard={false}
         centered
+        scrollable={true}
       >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className="bg-info text-white">
           <Modal.Title>{person.user_name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <h6>
             <span>{person.user_email}</span> | <span>{person.user_mobile}</span>
+          </h6>
+
+          <h6 className="my-4 fw-bold">
+            {person.user_city} - {person.user_country}
           </h6>
           <h6>Comments</h6>
           <div className="border border-1 w-100 rounded py-4 px-3">

@@ -108,9 +108,21 @@ const App = () => {
             </>
           }
         />
-        <Route path="/crm" element={<CRM />} />
+        <Route
+          path="/table"
+          element={
+            <>
+              {isDesktop ? (
+                <TableComponent data={data} handleUpdate={handleUpdate} />
+              ) : (
+                <CRM />
+              )}
+            </>
+          }
+        />
+        {/* <Route path="/crm" element={<CRM />} /> */}
         {/* <Route path="/react-table" element={<ReactTable columns={columns} />} /> */}
-        <Route path="/table" element={<TableComponent data={data} handleUpdate={handleUpdate} />} />
+        {/* <Route path="/table" element={<TableComponent data={data} handleUpdate={handleUpdate} />} /> */}
       </Routes>
     </div>
   );
