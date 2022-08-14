@@ -120,7 +120,7 @@ const TableComponent = (props) => {
       </div>
       <table
         style={{
-          borderLeft: 'solid 1px black',
+          // borderLeft: 'solid 1px black',
           // borderTop: 'solid 1px black',
           // borderBottom: 'solid 1px black',
           width: '98%',
@@ -130,24 +130,37 @@ const TableComponent = (props) => {
       >
         <thead>
           {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()} key={Math.random()}>
+            <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  scope="col"
-                  className={
-                    column.id == 'user_subscribed'
-                      ? 'last-column'
-                      : 'normal-column'
-                  }
-                  key={column.id}
-                  // className='normal-column'
-                >
-                  {column.render('Header')}
-                  <span className="sorting">
-                    {column.isSorted ? (column.isSortedDesc ? '🔽' : '🔼') : ''}
-                  </span>
-                  <div>{column.canFilter ? column.render('Filter') : null}</div>
+                <th {...column.getHeaderProps()} className="border-header">
+                  <div
+                    {...column.getSortByToggleProps()}
+                    // className={
+                    //   column.id == 'user_subscribed'
+                    //     ? 'last-column'
+                    //     : 'normal-column'
+                    // }
+                    style={{
+                      cursor: 'pointer',
+                      height: 30,
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    {column.render('Header')}
+                    <div style={{width: 20}}>
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? ' 🔽'
+                          : ' 🔼'
+                        : ''}
+                    </div>
+                  </div>
+                  <div style={{marginBlock: 10}} className="filter-input-field">
+                    {column.canFilter ? column.render('Filter') : null}
+                  </div>
                 </th>
               ))}
             </tr>

@@ -40,7 +40,11 @@ const UserModal = ({
   
   return (
     <>
-      <Button variant="primary" onClick={() => handleShow()}>
+      <Button
+        variant="primary"
+        className="View-btn"
+        onClick={() => handleShow()}
+      >
         View
       </Button>
 
