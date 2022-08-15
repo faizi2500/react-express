@@ -89,7 +89,16 @@ code {
   border-bottom: solid 3px red;
 }
 
+.border-header-mobile {
+  border: 1px solid black;
+  border-bottom: solid 3px red;
+}
+
 .View-btn{
   /* justify-content: center; */
   margin-left: 1rem;
+}
+
+#mobile-table {
+  width: 80vw;
 }

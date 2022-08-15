@@ -10,6 +10,7 @@ const UserModal = ({
   changeShowToFalse,
   person,
 }) => {
+  console.log(value);
 
   const handleClose = () => {
     changeShowToFalse('CLOSE-DELTE-MODAL');

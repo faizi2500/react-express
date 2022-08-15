@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from 'react'
-import { Button } from 'react-bootstrap';
-import { useTable, useSortBy, useFilters } from 'react-table';
+import React, {useMemo, useState} from 'react';
+import {Button} from 'react-bootstrap';
+import {useTable, useSortBy, useFilters} from 'react-table';
 import AddUserReactTable from './AddUserReactTable';
 import ModalUser from './ModalUser';
 import UserModal from './UserModal';
@@ -22,12 +22,7 @@ function DefaultColumnFilter({
   );
 }
 
-
 const columns = [
-  {
-    Header: 'ID',
-    accessor: '_id',
-  },
   {
     Header: 'User Name',
     accessor: 'user_name',
@@ -36,40 +31,29 @@ const columns = [
     Header: 'User Email',
     accessor: 'user_email',
   },
-  {
-    Header: 'User Mobile',
-    accessor: 'user_mobile',
-  },
-  {
-    Header: 'User Country',
-    accessor: 'user_country',
-  },
-  {
-    Header: 'User Subscribed',
-    accessor: 'user_subscribed',
-  },
 ];
 
-const TableComponent = (props) => {
+const TableMobileComponent = (props) => {
   const data = useMemo(() => props.data, [props.data]);
   const [person, setPerson] = useState([]);
   const [show, setShow] = useState(false);
   const [newShow, setNewShow] = useState(false);
   const [addShow, setAddShow] = useState(false);
 
-  const changeShowToTrue = (action, value='') => {
+  const changeShowToTrue = (action, value = '') => {
     if (action === 'DELETE-MODAL-BOX') {
-      const person2 = data.filter((obj) => obj._id == value);
+      const person2 = data.filter((obj) => obj.user_name == value);
+      console.log(person2);
       setPerson(person2[0]);
       setShow(true);
     } else if (action === 'ADD') {
       setAddShow(true);
     }
-  }
+  };
 
   const changeShowToFalse = (action) => {
     if (action === 'ADD') {
-      setAddShow(false)
+      setAddShow(false);
       props.handleUpdate();
     } else if (action === 'DELETE') {
       setShow(false);
@@ -77,7 +61,7 @@ const TableComponent = (props) => {
     } else if (action === 'CLOSE-DELTE-MODAL') {
       setShow(false);
     }
-  }
+  };
 
   let keyVal = 0;
 
@@ -90,8 +74,8 @@ const TableComponent = (props) => {
 
   const handleModalShow = () => {
     console.log('working');
-  }
-  
+  };
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -119,12 +103,10 @@ const TableComponent = (props) => {
         </div>
       </div>
       <table
+        id='mobile-table'
         style={{
-          // borderLeft: 'solid 1px black',
-          // borderTop: 'solid 1px black',
-          // borderBottom: 'solid 1px black',
-          width: '98%',
-          marginInline: 'auto',
+          width: '80vw',
+          marginLeft: '10px',
           marginTop: '10%',
         }}
       >
@@ -132,14 +114,9 @@ const TableComponent = (props) => {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()} className="border-header">
+                <th {...column.getHeaderProps()} className="border-header-mobile">
                   <div
                     {...column.getSortByToggleProps()}
-                    // className={
-                    //   column.id == 'user_subscribed'
-                    //     ? 'last-column'
-                    //     : 'normal-column'
-                    // }
                     style={{
                       cursor: 'pointer',
                       height: 30,
@@ -173,56 +150,7 @@ const TableComponent = (props) => {
               <>
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell, index) => {
-                    if (!cell.value) {
-                      return (
-                        <>
-                          <td
-                            {...cell.getCellProps()}
-                            style={{
-                              padding: '10px',
-                              border: 'solid 1px gray',
-                            }}
-                          >
-                            False
-                          </td>
-                          <td>
-                            <UserModal
-                              value={row.values._id}
-                              data={data}
-                              changeShowToTrue={changeShowToTrue}
-                              changeShowToFalse={changeShowToFalse}
-                              show={show}
-                              person={person}
-                            />
-                          </td>
-                        </>
-                      );
-                    } else if (cell.value == true) {
-                      return (
-                        <>
-                          <td
-                            {...cell.getCellProps()}
-                            style={{
-                              padding: '10px',
-                              border: 'solid 1px gray',
-                            }}
-                          >
-                            True
-                          </td>
-                          <td>
-                            <UserModal
-                              value={row.values._id}
-                              data={data}
-                              changeShowToTrue={changeShowToTrue}
-                              changeShowToFalse={changeShowToFalse}
-                              show={show}
-                              person={person}
-                              className="View-btn"
-                            />
-                          </td>
-                        </>
-                      );
-                    } else {
+                    console.log('row', row);
                       return (
                         <>
                           <td
@@ -234,9 +162,25 @@ const TableComponent = (props) => {
                           >
                             {cell.render('Cell')}
                           </td>
+                          {cell.value.includes('@') ? (
+                            <>
+                              <td>
+                                <UserModalNew
+                                  value={row.values.user_name}
+                                  data={data}
+                                  changeShowToTrue={changeShowToTrue}
+                                  changeShowToFalse={changeShowToFalse}
+                                  show={show}
+                                  person={person}
+                                />
+                              </td>
+                            </>
+                          ) : (
+                            <>
+                            </>
+                          )}
                         </>
                       );
-                    }
                   })}
                 </tr>
               </>
@@ -248,4 +192,4 @@ const TableComponent = (props) => {
   );
 }
 
-export default TableComponent
+export default TableMobileComponent

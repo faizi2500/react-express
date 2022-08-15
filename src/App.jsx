@@ -9,6 +9,7 @@ import DesktopForm from './components/DesktopForm'
 import Form from './components/Form'
 import ReactTable from './components/ReactTable'
 import TableComponent from './components/TableComponent'
+import TableMobileComponent from './components/TableMobileComponent'
 
 const App = () => {
   const [isDesktop, setDesktop] = useState(window.innerWidth > 850);
@@ -115,7 +116,7 @@ const App = () => {
               {isDesktop ? (
                 <TableComponent data={data} handleUpdate={handleUpdate} />
               ) : (
-                <CRM />
+                <TableMobileComponent data={data} handleUpdate={handleUpdate} />
               )}
             </>
           }
