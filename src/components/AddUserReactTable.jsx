@@ -96,6 +96,14 @@ const AddUserReactTable = ({addshow, changeShowToTrue, changeShowToFalse}) => {
       .catch(function (error) {
         console.log(error.response);
       });
+    setName('');
+    setEmail('');
+    setContact('');
+    setComment('');
+    setSubscribe(false);
+    setCountry('default');
+    setCities('');
+      
     changeShowToFalse('ADD');
   };
 
