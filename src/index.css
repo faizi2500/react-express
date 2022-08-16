@@ -65,9 +65,40 @@ code {
 }
 
 .normal-column {
-  border-bottom: solid 3px red;
   border-left: solid 1px black;
   border-top: solid 1px black;
   color: 'black';
 }
 
+.modal-backdrop {
+  background-color: transparent;
+}
+
+.hidden-input-country-validation {
+  margin-top: -10px;
+}
+
+.filter-input-field {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.border-header {
+  border: 1px solid black;
+  border-bottom: solid 3px red;
+}
+
+.border-header-mobile {
+  border: 1px solid black;
+  border-bottom: solid 3px red;
+}
+
+.View-btn{
+  /* justify-content: center; */
+  margin-left: 1rem;
+}
+
+#mobile-table {
+  width: 80vw;
+}

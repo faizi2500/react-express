@@ -3,7 +3,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-const UserModal = ({
+const UserModalNew = ({
   value,
   changeShowToTrue,
   show,
@@ -38,7 +38,7 @@ const UserModal = ({
       });
     changeShowToFalse('DELETE');
   };
-  
+
   return (
     <>
       <Button
@@ -86,4 +86,4 @@ const UserModal = ({
   );
 };
 
-export default UserModal;
+export default UserModalNew;

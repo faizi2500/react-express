@@ -58,11 +58,17 @@ const ModalUser = ({ person, handleRefresh }) => {
         keyboard={false}
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className="bg-info text-white">
           <Modal.Title>{person.user_name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h6><span>{person.user_email}</span> | <span>{person.user_mobile}</span></h6>
+          <h6>
+            <span>{person.user_email}</span> | <span>{person.user_mobile}</span>
+          </h6>
+
+          <h6 className="my-4 fw-bold">
+            {person.user_city} - {person.user_country}
+          </h6>
           <h6>Comments</h6>
           <div className="border border-1 w-100 rounded py-4 px-3">
             {person.user_comments}
@@ -72,7 +78,9 @@ const ModalUser = ({ person, handleRefresh }) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="danger" onClick={(e) => handleDelete(e)}>Delete</Button>
+          <Button variant="danger" onClick={(e) => handleDelete(e)}>
+            Delete
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
