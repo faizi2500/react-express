@@ -15,6 +15,7 @@ import PaginationCity from './PaginationCity';
 
 const AddUserReactTable = ({ addshow, changeShowToTrue, changeShowToFalse }) => {
   const [cityOptions, setCityOptions] = useState([]);
+  const [visitsList, setVisitsList] = useState([]);
   const ref = useRef(null);
   const [country, setCountry] = useState('default');
   const [cities, setCities] = useState('');
@@ -34,13 +35,22 @@ const AddUserReactTable = ({ addshow, changeShowToTrue, changeShowToFalse }) => 
     setCityOptions(arr);
   }, [country])
 
+  const addToList = (city) => {
+    console.log(city);
+    let status = false
+    visitsList.map((each) => {
+      each === city ? status = true : status = false;
+    })
+    if (status) {
+      const updatedList = visitsList.filter((each) => {
+        return each != city
+      })
+      setVisitsList(updatedList);
+    } else {
+      setVisitsList([...visitsList, city]);
+    }
+  }
 
-  // const cityList = []
-  // if (country) {
-  //   const countryCode = country.value;
-  //   const list = City.getCitiesOfCountry(countryCode);
-  //   list.map((each) => cityList.push(each.name));
-  // }
   console.log(cityOptions)
 
   const handleNameChange = (e, variable) => {
@@ -226,7 +236,12 @@ const AddUserReactTable = ({ addshow, changeShowToTrue, changeShowToFalse }) => 
                     ))}
                   </Form.Select>
                 </div>
-                <PaginationCity data={cityOptions} />
+                <h3 className='align-text-to-center'>Visited Cities</h3>
+                <PaginationCity
+                  data={cityOptions}
+                  addToList={addToList}
+                  visitsList={visitsList}
+                />
               </>
             ) : (
               <div>
