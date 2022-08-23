@@ -102,3 +102,8 @@ code {
 #mobile-table {
   width: 80vw;
 }
+
+.align-text-to-center {
+  margin-top: 5%;
+  text-align: center;
+}

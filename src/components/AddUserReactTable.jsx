@@ -10,8 +10,12 @@ import Modal from 'react-bootstrap/Modal';
 import {AiOutlineUserAdd} from 'react-icons/ai';
 import Select from 'react-select';
 import { ModalFooter } from 'react-bootstrap';
+import { useEffect } from 'react';
+import PaginationCity from './PaginationCity';
 
-const AddUserReactTable = ({addshow, changeShowToTrue, changeShowToFalse}) => {
+const AddUserReactTable = ({ addshow, changeShowToTrue, changeShowToFalse }) => {
+  const [cityOptions, setCityOptions] = useState([]);
+  const [visitsList, setVisitsList] = useState([]);
   const ref = useRef(null);
   const [country, setCountry] = useState('default');
   const [cities, setCities] = useState('');
@@ -22,21 +26,32 @@ const AddUserReactTable = ({addshow, changeShowToTrue, changeShowToFalse}) => {
   const [comment, setComment] = useState('');
   const [subscribe, setSubscribe] = useState(false);
 
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      height: 15,
-      minHeight: 15,
-    }),
-  };
-  const cityList = []
-  if (country) {
+  useEffect(() => {
     const countryCode = country.value;
     const list = City.getCitiesOfCountry(countryCode);
-    list.map((each) => cityList.push(each.name));
+    const arr = list.map((each) => {
+      return each.name;
+    });
+    setCityOptions(arr);
+  }, [country])
+
+  const addToList = (city) => {
+    console.log(city);
+    let status = false
+    visitsList.map((each) => {
+      each === city ? status = true : status = false;
+    })
+    if (status) {
+      const updatedList = visitsList.filter((each) => {
+        return each != city
+      })
+      setVisitsList(updatedList);
+    } else {
+      setVisitsList([...visitsList, city]);
+    }
   }
 
-  console.log(cityList);
+  console.log(cityOptions)
 
   const handleNameChange = (e, variable) => {
     if (variable === 'name') {
@@ -54,6 +69,8 @@ const AddUserReactTable = ({addshow, changeShowToTrue, changeShowToFalse}) => {
 
   // console.log(City.getCitiesOfCountry('PK'));
   const changeHandler = (value) => {
+    const list = City.getCitiesOfCountry(value.value);
+    console.log('list', list);
     setCountry(value);
   };
 
@@ -202,22 +219,30 @@ const AddUserReactTable = ({addshow, changeShowToTrue, changeShowToFalse}) => {
                 required
               />
             </div>
-            {cityList.length > 1 ? (
-              <div className="">
-                <Form.Select
-                  as="select"
-                  className="w-75 mx-auto cities-option-dropdown"
-                  aria-label="Default select example"
-                  placeholder="Select City Optional"
-                  defaultValue={cities || ''}
-                  onChange={(e) => handleCity(e)}
-                >
-                  <option value={cities}>Select City (Optional)</option>
-                  {cityList.map((each) => (
-                    <option value={each}>{each}</option>
-                  ))}
-                </Form.Select>
-              </div>
+            {cityOptions.length > 1 ? (
+              <>
+                <div className="">
+                  <Form.Select
+                    as="select"
+                    className="w-75 mx-auto cities-option-dropdown"
+                    aria-label="Default select example"
+                    placeholder="Select City Optional"
+                    defaultValue={cities || ''}
+                    onChange={(e) => handleCity(e)}
+                  >
+                    <option value={cities}>Select City (Optional)</option>
+                    {cityOptions.map((each) => (
+                      <option value={each}>{each}</option>
+                    ))}
+                  </Form.Select>
+                </div>
+                <h3 className='align-text-to-center'>Visited Cities</h3>
+                <PaginationCity
+                  data={cityOptions}
+                  addToList={addToList}
+                  visitsList={visitsList}
+                />
+              </>
             ) : (
               <div>
                 <Select
